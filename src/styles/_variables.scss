@@ -1,0 +1,44 @@
+$default-font-family: 'Source Sans Pro', sans-serif;
+
+$primary: #1273EA;
+$primary-100: #E9F5FE;
+$primary-300: #8DC9F9;
+$primary-400: #68B8F8;
+$primary-fade-50: rgba($primary, 0.5);
+
+$basic-light: #FFF;
+$basic-light-200: #F7F9FC;
+$basic-light-300: #EDF1F7;
+$basic-light-500: #C5CEE0;
+
+$basic-text-900: #151A30;
+$basic-text-900-fade-50: rgba($basic-text-900, 0.5);
+
+$basic-text-700: #57627B;
+$basic-text-600: #8F9BB3;
+
+$basic-icon: #231F20;
+
+$neutral-200: #EEF3FB;
+
+$shadow: #C5CEE0;
+
+$bg-primary-gradient: linear-gradient(256deg, #1C94F4 0%, $primary 100%);
+
+$box-shadow-1: 0 12px 20px -4px $shadow;
+$box-shadow-2: 0px 4px 12px $basic-light-200;
+
+$default-radius: 8px;
+$default-padding: 10px 20px;
+
+// Fonts ⋆ ✢ ✣ ✤ ✥ ✦ ✧ ✩ ✪ ✫ ✬ ✭ ✮ ✯ ✰ ★
+$font-size-root: 16px;
+$font-size-extra-small: 10px;
+$font-size-small: 12px;
+$font-size-normal: 14px;
+$font-size-large: 20px;
+$font-size-hero: 32px;
+
+$font-weight-normal: 400;
+$font-weight-semi-bold: 600;
+$font-weight-bold: 700;

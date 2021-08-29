@@ -1,0 +1,10 @@
+@import 'styles/variables';
+@import 'styles/functions';
+
+.controlCenter {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
+  margin: rem(24px) auto rem(16px);
+}

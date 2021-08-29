@@ -1,0 +1,41 @@
+@import 'styles/variables';
+@import 'styles/functions';
+@import 'styles/mixins';
+
+.unlockWallet {
+  @include bgTopCenter('../assets/images/bg-unlock-wallet-2x.png');
+}
+
+.logo {
+  width: 160px;
+  height: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: rem(34px) auto rem(24px);
+
+  img {
+    width: 100%;
+    height: auto;
+  }
+}
+
+.title {
+  @include textHero();
+  margin: rem(24px) 0 rem(8px);
+}
+
+.subTitle {
+  font-size: $font-size-normal;
+  font-weight: $font-weight-normal;
+  line-height: 1.5;
+  margin: rem(8px) 0 rem(24px);
+}
+
+.inputUnlock {
+  margin-bottom: rem(24px);
+
+  :global(.ant-input-suffix) {
+    font-size: rem(20px);
+  }
+}

@@ -1,0 +1,74 @@
+@import 'styles/variables';
+@import 'styles/functions';
+
+.modal {
+  :global {
+    .ant-modal {
+      width: rem(336px);
+      height: rem(560px);
+    }
+
+    .ant-modal-close-x {
+      font-size: $font-size-normal;
+    }
+
+    .ant-modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: rem(60px);
+    }
+    
+    .ant-modal-title {
+      white-space: nowrap;
+      text-align: center;
+    }
+
+    .ant-modal-content {
+      min-height: 100%;
+      overflow: hidden;
+    }
+  }
+}
+
+.modalMethod {
+  width: rem(336px) !important;
+  height: auto;
+
+  :global {
+    .anticon {
+      display: none;
+    }
+
+    .ant-modal-confirm-title {
+      margin-bottom: rem(24px);
+      text-align: center;
+      font-weight: $font-weight-bold;
+      font-size: $font-size-large;
+      line-height: 1.4;
+      color: $basic-text-900;
+    }
+
+    .ant-modal-confirm-content {
+      margin: 0 !important;
+      font-size: $font-size-root;
+      line-height: 1.5;
+      color: $basic-text-900;
+    }
+
+    .ant-modal-confirm-content p {
+      margin-bottom: 0;
+    }
+
+    .ant-modal-confirm-btns {
+      display: flex;
+      width: 100%;
+      margin-top: rem(24px);
+    }
+
+    .ant-modal-confirm-btns .ant-btn {
+      flex: 1 0 auto;
+    }
+  }
+}

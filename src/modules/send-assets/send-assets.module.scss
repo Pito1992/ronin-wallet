@@ -1,0 +1,55 @@
+@import 'styles/variables';
+@import 'styles/functions';
+@import 'styles/mixins';
+
+.sendAssets {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  
+  .btnMaxAmount {
+    color: $basic-text-700;
+    background-color: $neutral-200;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: $font-weight-bold;
+    font-size: $font-size-extra-small;
+    line-height: 1.5;
+    width: rem(42px);
+    height: rem(20px);
+  }
+  
+  .inputMyWallet {
+    :global(.ant-input-prefix) {
+      font-weight: $font-weight-bold;
+    }
+  }
+  
+  .availableAmount {
+    font-size: $font-size-extra-small;
+    line-height: 1.5;
+    font-weight: $font-weight-bold;
+    text-align: right;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: $basic-text-900;
+  }
+  
+  .form {
+    width: 100%;
+    height: 100%;
+    margin: rem(24px) 0 0;
+    display: flex;
+    flex-direction: column;
+
+    .inputContainer {
+      margin: 0.5rem 0;
+    }
+
+    .btnGroup {
+      margin-top: auto;
+    }
+  }
+}
+
+

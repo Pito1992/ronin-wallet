@@ -1,0 +1,54 @@
+@import 'styles/variables';
+@import 'styles/functions';
+@import 'styles/mixins';
+
+.mainWallet {
+  @include bgTopCenter('../assets/images/bg-main-wallet-2x.png');
+}
+
+.profile {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: rem(20px);
+
+  #{&}Name,
+  #{&}Symbol {
+    display: flex;
+    align-items: center;
+    background: $basic-light-200;
+    border-radius: $default-radius;
+    height: rem(32px);
+  }
+
+  #{&}Name {
+    font-size: $font-size-small;
+    font-weight: $font-weight-bold;
+    padding: 0 rem(20px) 0 rem(12px);
+    white-space: nowrap;
+    line-height: 1.625;
+
+    &::before {
+      content: '';
+      display: block;
+      float: left;
+      border-radius: 50%;
+      width: rem(8px);
+      height: rem(8px);
+      background-color: $primary;
+      margin-right: rem(12px);
+    }
+  }
+
+  #{&}Symbol {
+    width: rem(32px);
+    justify-content: center;
+  }
+}
+
+.currencyBox {
+  margin: rem(8px) 0;
+  border-radius: $default-radius;
+  background-color: $basic-light-200;
+}
+

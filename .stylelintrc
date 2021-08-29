@@ -1,0 +1,17 @@
+{
+  "plugins": [
+    "stylelint-order"
+  ],
+  "rules": {
+    "max-nesting-depth": 2,
+    "selector-class-pattern": [
+      "^[a-z]+[a-zA-Z0-9]*$",
+      {
+        "message": "Selector should be written in lower camelCase (selector-class-pattern)"
+      }
+    ],
+    "selector-no-qualifying-type": [true, {
+      "ignore": ["attribute", "class", "id"]
+    }]
+  }
+}

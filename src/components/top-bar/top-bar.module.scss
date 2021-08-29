@@ -1,0 +1,32 @@
+@import 'styles/variables';
+@import 'styles/mixins';
+@import 'styles/functions';
+
+.topBar {
+  width: 100%;
+  height: rem(56px);
+  text-align: center;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: $box-shadow-2;
+}
+
+.title {
+  font-size: $font-size-normal;
+  font-weight: $font-weight-semi-bold;
+  line-height: 1.5;
+  color: $basic-text-900;
+}
+
+.btnGoBack {
+  @include buttonTransparent();
+  width: rem(32px);
+  height: rem(32px);
+  line-height: 0;
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}

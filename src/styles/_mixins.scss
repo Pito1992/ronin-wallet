@@ -1,0 +1,21 @@
+@mixin textHero {
+  font-size: $font-size-hero;
+  font-weight: $font-weight-bold;
+  line-height: 1.25;
+}
+
+@mixin bgTopCenter($url) {
+  text-align: center;
+  background: url($url) center top no-repeat;
+  background-size: 100%;
+  text-align: center;
+  width: 100%;
+}
+
+@mixin buttonTransparent {
+  cursor: pointer;
+  background-color: transparent;
+  border: 0;
+  margin: 0;
+  padding: 0;
+}

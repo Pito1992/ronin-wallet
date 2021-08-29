@@ -1,0 +1,27 @@
+@import 'styles/variables';
+@import 'styles/functions';
+
+.currencySymbol {
+  margin-right: rem(8px);
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: 100%;
+  width: rem(24px);
+  height: rem(24px);
+  
+  &.USD {
+    background-image: url('../../assets/images/usd-2x.png');
+  }
+  &.EUR {
+    background-image: url('../../assets/images/eur-2x.png');
+  }
+  &.YEN {
+    background-image: url('../../assets/images/yen-2x.png');
+  }
+
+  &.large {
+    width: rem(32px);
+    height: rem(32px);
+    margin-right: rem(16px);
+  }
+}
