@@ -1,12 +1,13 @@
 import { useHistory } from 'react-router-dom'
-
 import { Formik, Field } from 'formik'
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons'
+import * as Yup from 'yup'
+import { Form } from 'antd'
 
 import { MAIN_URL } from '../../constants/urls'
 
 import Button from '../../components/button'
-import Input from '../../components/input'
+import FormInput from '../../components/form-input'
 import Container from '../../components/container'
 
 import { ReactComponent as Logo } from '../../assets/svgs/logo.svg'
@@ -24,6 +25,11 @@ function UnlockWallet() {
     }, 1000)
   }
 
+  const UnlockWalletFormSchema = Yup.object().shape({
+    password: Yup.string()
+      .required('Password is required'),
+  })
+
   return (
     <Container>
       <div className={styles.unlockWallet}>
@@ -35,19 +41,20 @@ function UnlockWallet() {
         <Formik
           initialValues={{ password: '' }}
           onSubmit={onSubmit}
+          validationSchema={UnlockWalletFormSchema}
         >
           {({ handleSubmit, values, isSubmitting }) => (
-            <form onSubmit={handleSubmit}>
+            <Form onFinish={handleSubmit} layout="vertical">
               <Field
                 name="password"
-                containerClassName={styles.inputUnlock}
+                inputClassName={styles.inputUnlock}
                 inputType="Password"
                 label="Enter password"
                 iconRender={visible => (visible ? <EyeInvisibleOutlined /> : <EyeTwoTone />)}
-                component={Input}
+                as={FormInput}
               />
               <Button className={styles.ctaUnlock} type="primary" htmlType="submit" disabled={!values.password.length} loading={isSubmitting} >Unlock</Button>
-            </form>
+            </Form>
           )}
         </Formik>
       </div>

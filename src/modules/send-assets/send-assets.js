@@ -1,22 +1,16 @@
 import { useState, useCallback } from 'react'
 import { useHistory } from 'react-router-dom'
-import { Formik, Field } from 'formik'
-import { Row, Col } from 'antd'
-import classnames from 'classnames'
+import { Formik } from 'formik'
+import * as Yup from 'yup'
 
 import { CURRENCY_CODE } from '../../constants/currency'
 import { MAIN_URL } from '../../constants/urls'
 
 import CurrencyBox from '../../components/currency-box'
-import CurrencySymbol from '../../components/currency-symbol'
-import FormatCurrency from '../../components/format-currency'
 import Modal from '../../components/modal'
-import Button from '../../components/button'
-import Input from '../../components/input'
 import TopBar from '../../components/top-bar'
 import Container from '../../components/container'
-
-import { ReactComponent as IconLayers } from '../../assets/svgs/layers.svg'
+import Form from './partials/form'
 
 import user from '../../fixtures/user'
 import wallets from '../../fixtures/wallet'
@@ -27,13 +21,13 @@ import styles from './send-assets.module.scss'
 function SendAssets() {
   const history = useHistory()
   const [isVisibleSelectionAssetModal, setVisibleSelectionAssetModal] = useState(false)
-
-  const { walletId } = user
-  const { wallet } = wallets[walletId]
+  const [maxNumber, setMaxNumber] = useState(0)
 
   const onCloseModal = useCallback(() => setVisibleSelectionAssetModal(false), [])
   const onOpenModal = useCallback(() => setVisibleSelectionAssetModal(true), [])
   
+  const { walletId } = user
+  const { wallet } = wallets[walletId]
 
   const onSubmit = (values, actions) => {
     actions.setSubmitting(true)
@@ -55,9 +49,18 @@ function SendAssets() {
     }, 1000)
   }
 
+  const SendAssetsFormSchema = Yup.object().shape({
+    to: Yup.string()
+      .required('Input is required'),
+    amount: Yup.number()
+      .positive()
+      .max(maxNumber)
+      .required('Input is required'),
+  })
+
   return (
     <>
-      <Container>
+      <Container direction="column">
         <TopBar title="Send Assets" hasWayBack />
         <div className={styles.sendAssets}>
           <Formik
@@ -67,87 +70,24 @@ function SendAssets() {
               asset: CURRENCY_CODE.EUR,
               amount: 0,
             }}
-            enableReinitialize
             onSubmit={onSubmit}
+            validationSchema={SendAssetsFormSchema}
           >
-            {({ handleSubmit, isSubmitting, values, setFieldValue }) => {
-              const selectedCurrency = currencyBoxesData[values.asset]
+            {({ setFieldValue }) => {
               const setAsset = (value) => {
                 setFieldValue('asset', value)
                 onCloseModal()
               }
 
-              const setMaxAmount = () => {
-                setFieldValue('amount', selectedCurrency.currency.balance)
-              }
-
               return (
                 <>
-                  <form onSubmit={handleSubmit} className={styles.form}>
-                    <Input
-                      type="text"
-                      label="From"
-                      prefix="My Wallet"
-                      containerClassName={classnames(styles.inputContainer, styles.inputMyWallet)}
-                      value={`(${wallet.slice(0, 4)}...${wallet.slice(-4)})`}
-                      disabled
-                      readOnly
-                    />
-                    <Field
-                      type="text"
-                      name="to"
-                      label="To"
-                      component={Input}
-                      disabled={isSubmitting}
-                      containerClassName={styles.inputContainer}
-                    />
-                    <Field
-                      type="text"
-                      name="asset"
-                      label="Asset"
-                      prefix={<CurrencySymbol currencyCode={values.asset} />}
-                      suffix={<IconLayers />}
-                      value={values.asset}
-                      readOnly
-                      onClick={onOpenModal}
-                      disabled={isSubmitting}
-                      component={Input}
-                      containerClassName={styles.inputContainer}
-                    />
-                    <Field
-                      type="number"
-                      name="amount"
-                      label="Amount"
-                      labelSuffix={selectedCurrency?.base ? <span className={styles.availableAmount}>Available: <FormatCurrency value={selectedCurrency.currency?.balance} unit={selectedCurrency.base} /></span> : null}
-                      suffix={<Button className={styles.btnMaxAmount} onClick={setMaxAmount} size="small">Max</Button>}
-                      component={Input}
-                      containerClassName={styles.inputContainer}
-                      disabled={isSubmitting}
-                      min={1}
-                      max={selectedCurrency.currency.balance}
-                    />
-                    <Row gutter={[16, 16]} className={styles.btnGroup}>
-                      <Col span={12}>
-                        <Button
-                          block
-                          disabled={isSubmitting}
-                          onClick={history.goBack}
-                        >
-                            Cancel
-                        </Button>
-                      </Col>
-                      <Col span={12}>
-                        <Button
-                          block
-                          type="primary"
-                          htmlType="submit"
-                          loading={isSubmitting}
-                        >
-                          Send
-                        </Button>
-                      </Col>
-                    </Row>
-                  </form>
+                  <Form
+                    actions={{
+                      setMaxNumber,
+                      onCloseModal,
+                      onOpenModal,
+                    }}
+                  />
                   <Modal
                     isVisible={isVisibleSelectionAssetModal}
                     onCancel={onCloseModal}

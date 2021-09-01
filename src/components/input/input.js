@@ -1,5 +1,8 @@
 import classnames from 'classnames'
+
 import { Input as AntdInput } from 'antd'
+import Label from '../label'
+
 import styles from './input.module.scss'
 
 function Input({
@@ -17,12 +20,7 @@ function Input({
 
   return (
     <div className={classnames(styles.container, containerClassName)}>
-      {(label || labelSuffix) && (
-        <div className={styles.labelWrapper}>
-          {label && <label className={styles.label}>{label}</label>}
-          {labelSuffix && <span className={styles.labelSuffix}>{labelSuffix}</span>}
-        </div>
-      )}
+      <Label label={label} labelSuffix={labelSuffix} />
       <InputWrapper className={classnames(styles.input, className)} {...field} {...restProps}>
         {children}
       </InputWrapper>

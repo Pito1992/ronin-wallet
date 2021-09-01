@@ -1,0 +1,29 @@
+@import 'styles/variables';
+@import 'styles/functions';
+
+.wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.label,
+.labelSuffix {
+  display: block;
+  font-size: $font-size-extra-small;
+  font-weight: $font-weight-bold;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  line-height: 1.5;
+  margin: rem(4px) rem(8px);
+}
+
+.label {
+  text-align: left;
+  color: $basic-text-700;
+}
+
+.labelSuffix {
+  text-align: right;
+  color: $basic-text-900;
+}

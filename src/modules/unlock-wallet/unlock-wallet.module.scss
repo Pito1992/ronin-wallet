@@ -33,9 +33,11 @@
 }
 
 .inputUnlock {
-  margin-bottom: rem(24px);
-
   :global(.ant-input-suffix) {
     font-size: rem(20px);
   }
+}
+
+.ctaUnlock {
+  margin-top: rem(24px);
 }
