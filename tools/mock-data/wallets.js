@@ -1,5 +1,5 @@
-import faker from 'faker'
-import userData from './user'
+const faker = require('faker')
+const user = require('./user')
 
 const fixedUserWallet = {
   wallet: '7300 3777 3888 3334',
@@ -28,12 +28,11 @@ const fixedUserWallet = {
 }
 
 function genarateUserWallet({ walletId }, index) {
-  console.log("🚀 ~ file: wallets.js ~ line 33 ~ genarateUserWallet ~ walletId", walletId)
   faker.seed(index)
   const dollar = faker.datatype.number({ min: 0, max: 10000 })
   const euro = faker.datatype.number({ min: 0, max: 10000 })
   const yen = faker.datatype.number({ min: 0, max: 10000 })
-  return ({
+  return {
     [walletId]: {
       wallet: walletId.replace(/\-/g, ' '),
       base: 'VND',
@@ -59,10 +58,10 @@ function genarateUserWallet({ walletId }, index) {
         }
       }
     }
-  })
+  }
 }
 
-const walletData = userData.reduce((acc, data) => {
+const walletData = user.userData.reduce(function(acc, data) {
   return {
     ...acc,
     ...genarateUserWallet(data),
@@ -70,4 +69,4 @@ const walletData = userData.reduce((acc, data) => {
 }, {})
 walletData['7300-3777-3888-3334'] = fixedUserWallet
 
-export default walletData
+module.exports = walletData

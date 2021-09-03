@@ -11,6 +11,7 @@ export function* getUserWalletSaga() {
   try {
     const walletId = yield select(getUserWalletId)
     const { data } = yield call(userWalletApi.getUserWallet, walletId)
+    console.log("🚀 ~ file: user-wallet-sagas.js ~ line 14 ~ function*getUserWalletSaga ~ data", data)
     yield put(getUserWalletSuccess(data))
   } catch(e) {
     yield put(getUserWalletFailure(e))

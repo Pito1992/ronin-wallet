@@ -1,9 +1,9 @@
-import faker from 'faker'
-import jwt from 'jsonwebtoken'
+const faker = require('faker')
+const jwt = require('jsonwebtoken')
 
-export const username = 'Ronin Wallet'
+const username = 'Ronin Wallet'
 
-export const fixedUserData = {
+const fixedUserData = {
   id: faker.datatype.uuid(),
   name: username,
   walletId: '7300-3777-3888-3334',
@@ -24,5 +24,8 @@ function genarateUserData(index) {
 const userData = [...Array(9)].map(genarateUserData)
 userData.push(fixedUserData)
 
-export default userData
+module.exports = {
+  fixedUserData,
+  userData,
+}
 

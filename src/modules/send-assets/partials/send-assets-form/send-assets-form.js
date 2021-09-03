@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 import { Field, useFormikContext } from 'formik'
 import { Row, Col, Form } from 'antd'
 import classnames from 'classnames'
@@ -10,11 +11,9 @@ import Button from '../../../../components/button'
 import Input from '../../../../components/input'
 import FormInput from '../../../../components/form-input'
 
-import user from '../../../../fixtures/user'
-import wallets from '../../../../fixtures/wallet'
-import currencyBoxesData from '../../../../fixtures/currencies'
-
 import { ReactComponent as IconLayers } from '../../../../assets/svgs/layers.svg'
+
+import { getUserWalletNumber, getCurrencyDataByCurrencyCode } from '../../../../redux/user-wallet/user-wallet-selectors'
 
 import styles from './send-assets-form.module.scss'
 
@@ -22,18 +21,17 @@ function SendAssetsForm({ actions }) {
   const history = useHistory()
   const { values, handleSubmit, isSubmitting, setFieldValue } = useFormikContext()
 
-  const { walletId } = user
-  const { wallet } = wallets[walletId]
-  const selectedCurrency = currencyBoxesData[values.asset]
+  const wallet = useSelector(getUserWalletNumber)
+  const { balance } = useSelector(getCurrencyDataByCurrencyCode(values.asset))
 
   const setMaxAmount = (event) => {
     event.preventDefault()
-    setFieldValue('amount', selectedCurrency.currency.balance)
+    setFieldValue('amount', balance)
   }
 
   useEffect(() => {
-    actions.setMaxNumber(selectedCurrency.currency.balance)
-  }, [actions, selectedCurrency.currency.balance])
+    actions.setMaxNumber(balance)
+  }, [actions, balance])
 
   return (
     <>
@@ -72,13 +70,13 @@ function SendAssetsForm({ actions }) {
           type="number"
           name="amount"
           label="Amount"
-          labelSuffix={selectedCurrency?.base ? <span className={styles.availableAmount}>Available: <FormatCurrency value={selectedCurrency.currency?.balance} unit={selectedCurrency.base} /></span> : null}
+          labelSuffix={values.asset ? <span className={styles.availableAmount}>Available: <FormatCurrency value={balance} unit={values.asset} /></span> : null}
           suffix={<Button className={styles.btnMaxAmount} onClick={setMaxAmount} size="small">Max</Button>}
           as={FormInput}
           className={styles.inputContainer}
           disabled={isSubmitting}
           min={1}
-          max={selectedCurrency.currency.balance}
+          max={balance}
         />
         <Row gutter={[16, 16]} className={styles.btnGroup}>
           <Col span={12}>
