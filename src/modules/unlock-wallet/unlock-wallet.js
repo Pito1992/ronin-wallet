@@ -1,4 +1,6 @@
+import { useEffect, useRef } from 'react'
 import { useHistory } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
 import { Formik, Field } from 'formik'
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons'
 import * as Yup from 'yup'
@@ -10,25 +12,44 @@ import Button from '../../components/button'
 import FormInput from '../../components/form-input'
 import Container from '../../components/container'
 
+import { userLogin } from '../../redux/authentication/authentication-actions'
+import { getAuthLoading, getAuthError, getUserToken } from '../../redux/authentication/authentication-selectors'
+
 import { ReactComponent as Logo } from '../../assets/svgs/logo.svg'
 
 import styles from './unlock-wallet.module.scss'
 
 function UnlockWallet() {
+  const formikRef = useRef()
   const history = useHistory()
-  const onSubmit = (values, actions) => {
+  const dispatch = useDispatch()
+  const isAuthenticating = useSelector(getAuthLoading)
+  const error = useSelector(getAuthError)
+  const token = useSelector(getUserToken)
+
+  const onSubmit = ({ password }, actions) => {
     actions.setSubmitting(true)
-    console.log("🚀 ~ file: unlock-wallet.js ~ line 24 ~ UnlockWallet ~ values", values)
-    setTimeout(() => {
-      history.push(MAIN_URL)
-      actions.setSubmitting(false)
-    }, 1000)
+    dispatch(userLogin({ password }))
   }
 
   const UnlockWalletFormSchema = Yup.object().shape({
     password: Yup.string()
       .required('Password is required'),
   })
+
+  useEffect(() => {
+    formikRef?.current?.setSubmitting(isAuthenticating)
+  }, [formikRef, isAuthenticating])
+
+  useEffect(() => {
+    if (error && formikRef) {
+      formikRef?.current?.setFieldError('password', error?.message)
+    }
+  }, [formikRef, error])
+
+  useEffect(() => {
+    token && history.push(MAIN_URL)
+  }, [token, history])
 
   return (
     <Container>
@@ -39,6 +60,7 @@ function UnlockWallet() {
         <h1 className={styles.title}>Ronin Wallet</h1>
         <h2 className={styles.subTitle}>Your Digital Passport</h2>
         <Formik
+          innerRef={formikRef}
           initialValues={{ password: '' }}
           onSubmit={onSubmit}
           validationSchema={UnlockWalletFormSchema}

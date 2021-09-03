@@ -1,4 +1,5 @@
 import { useState, useCallback } from 'react'
+import { useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import { Formik } from 'formik'
 import * as Yup from 'yup'
@@ -10,28 +11,25 @@ import CurrencyBox from '../../components/currency-box'
 import Modal from '../../components/modal'
 import TopBar from '../../components/top-bar'
 import Container from '../../components/container'
-import Form from './partials/form'
+import Form from './partials/send-assets-form'
 
-import user from '../../fixtures/user'
-import wallets from '../../fixtures/wallet'
-import currencyBoxesData from '../../fixtures/currencies'
+import { getUserWalletNumber, getAvailableCurrencies } from '../../redux/user-wallet/user-wallet-selectors'
 
 import styles from './send-assets.module.scss'
 
 function SendAssets() {
   const history = useHistory()
+  const walletNumber = useSelector(getUserWalletNumber)
+  const availableCurrencies = useSelector(getAvailableCurrencies)
+
   const [isVisibleSelectionAssetModal, setVisibleSelectionAssetModal] = useState(false)
   const [maxNumber, setMaxNumber] = useState(0)
 
   const onCloseModal = useCallback(() => setVisibleSelectionAssetModal(false), [])
   const onOpenModal = useCallback(() => setVisibleSelectionAssetModal(true), [])
-  
-  const { walletId } = user
-  const { wallet } = wallets[walletId]
 
   const onSubmit = (values, actions) => {
     actions.setSubmitting(true)
-    console.log("🚀 ~ file: send-assets.js ~ line 38 ~ onSubmit ~ values", values)
     setTimeout(() => {
       actions.setSubmitting(false)
       Modal.success({
@@ -65,7 +63,7 @@ function SendAssets() {
         <div className={styles.sendAssets}>
           <Formik
             initialValues={{
-              from: wallet,
+              from: walletNumber,
               to: '',
               asset: CURRENCY_CODE.EUR,
               amount: 0,
@@ -93,7 +91,7 @@ function SendAssets() {
                     onCancel={onCloseModal}
                     footer={null}
                   >
-                    {Object.keys(currencyBoxesData).map((currencyCode) => (
+                    {availableCurrencies.map((currencyCode) => (
                       <CurrencyBox key={currencyCode} className={styles.currencyBox} currencyCode={currencyCode} onClick={setAsset} />
                     ))}
                   </Modal>

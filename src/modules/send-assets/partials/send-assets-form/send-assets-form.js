@@ -16,7 +16,7 @@ import currencyBoxesData from '../../../../fixtures/currencies'
 
 import { ReactComponent as IconLayers } from '../../../../assets/svgs/layers.svg'
 
-import styles from './form.module.scss'
+import styles from './send-assets-form.module.scss'
 
 function SendAssetsForm({ actions }) {
   const history = useHistory()
