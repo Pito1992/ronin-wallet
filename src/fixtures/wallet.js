@@ -1,6 +1,7 @@
 const userWallet = {
   wallet: '7300 3777 3888 3334',
   base: 'VND',
+  mainCurrency: 'USD',
   currencies: {
     'USD': {
       balance: 1000,

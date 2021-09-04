@@ -12,7 +12,7 @@ export const login = (credentials) => (
   //   withCredentials: true,
   //   data: credentials,
   // })
-  new Promise(res => setTimeout(() => res({ data: user }), 500))
+  new Promise(res => setTimeout(() => res({ data: user }), 1500))
 )
 
 
